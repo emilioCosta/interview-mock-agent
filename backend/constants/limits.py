@@ -1,0 +1,3 @@
+MODEL = "claude-sonnet-4-20250514"
+MIN_QUESTIONS = 10
+MAX_QUESTIONS = 20
