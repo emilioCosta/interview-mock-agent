@@ -1,41 +1,39 @@
 import styled from 'styled-components'
-import { colors, fonts, radius } from '../styles/globalStyles'
+import { colors, fonts, radius, spacing, typography } from '../styles/globalStyles'
 
 export const Page = styled.div`
   max-width: 800px;
   margin: 0 auto;
-  padding: 24px 24px 80px;
+  padding: ${spacing.lg} ${spacing.lg} calc(${spacing.xxl} * 3.33);
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: ${spacing.xxl};
+  background: ${colors.canvas};
 `
 
 export const Header = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid ${colors.border};
+  gap: ${spacing.xl};
+  padding-bottom: ${spacing.lg};
+  border-bottom: 1px solid ${colors.hairline};
 `
 
 export const Logo = styled.span`
-  font-family: ${fonts.mono};
-  font-size: 11px;
-  letter-spacing: 4px;
-  color: ${colors.accent};
-  border: 1px solid ${colors.accent};
-  padding: 4px 8px;
+  ${typography.navLink};
+  color: ${colors.primary};
+  border: 1px solid ${colors.primary};
+  padding: ${spacing.xxs} ${spacing.xs};
 `
 
 export const Title = styled.h2`
-  font-size: 20px;
-  font-weight: 600;
-  color: ${colors.textMuted};
+  ${typography.bodyStrong};
+  color: ${colors.inkMuted48};
 `
 
 export const Hero = styled.section`
   text-align: center;
-  padding: 24px 0;
+  padding: ${spacing.lg} 0;
 `
 
 export const AverageGrade = styled.div`
@@ -47,41 +45,38 @@ export const AverageGrade = styled.div`
 
   & span {
     font-size: 40px;
-    color: ${colors.textMuted};
+    color: ${colors.inkMuted48};
   }
 `
 
 export const AverageLabel = styled.p`
-  font-family: ${fonts.mono};
-  font-size: 13px;
-  letter-spacing: 3px;
-  color: ${colors.textMuted};
+  ${typography.navLink};
+  color: ${colors.inkMuted48};
   text-transform: uppercase;
-  margin-top: 8px;
+  margin-top: ${spacing.xs};
 `
 
 export const QuestionCount = styled.p`
-  font-family: ${fonts.mono};
-  font-size: 12px;
-  color: ${colors.textDim};
-  margin-top: 4px;
+  ${typography.caption};
+  color: ${colors.inkMuted48};
+  margin-top: ${spacing.xxs};
 `
 
 export const Stats = styled.section`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: ${spacing.sm};
 `
 
 export const StatCard = styled.div`
-  background: ${colors.bg2};
-  border: 1px solid ${colors.border};
-  border-radius: ${radius.lg};
-  padding: 24px;
+  background: ${colors.canvasParchment};
+  border: 1px solid ${colors.hairline};
+  border-radius: ${radius.md};
+  padding: ${spacing.lg};
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: ${spacing.xs};
 `
 
 export const StatValue = styled.span`
@@ -91,104 +86,92 @@ export const StatValue = styled.span`
 `
 
 export const StatLabel = styled.span`
-  font-family: ${fonts.mono};
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: ${colors.textMuted};
+  ${typography.navLink};
+  color: ${colors.inkMuted48};
   text-transform: uppercase;
 `
 
 export const Breakdown = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: ${spacing.md};
 `
 
 export const SectionTitle = styled.h3`
-  font-family: ${fonts.mono};
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: ${colors.textDim};
+  ${typography.navLink};
+  color: ${colors.inkMuted48};
   text-transform: uppercase;
-  margin-bottom: 16px;
+  margin-bottom: ${spacing.md};
 `
 
 export const Card = styled.div`
-  background: ${colors.bg2};
-  border: 1px solid ${colors.border};
-  border-radius: ${radius.lg};
-  padding: 24px;
+  background: ${colors.canvasParchment};
+  border: 1px solid ${colors.hairline};
+  border-radius: ${radius.md};
+  padding: ${spacing.lg};
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: ${spacing.sm};
 `
 
 export const CardHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: ${spacing.lg};
 `
 
 export const CardNum = styled.span`
-  font-family: ${fonts.mono};
-  font-size: 12px;
-  color: ${colors.textMuted};
-  letter-spacing: 2px;
+  ${typography.caption};
+  color: ${colors.inkMuted48};
 `
 
 export const CardGrade = styled.span`
-  font-family: ${fonts.mono};
-  font-size: 18px;
-  font-weight: 700;
+  ${typography.captionStrong};
   color: ${({ $color }) => $color};
 `
 
 export const CardVerdict = styled.span`
-  font-family: ${fonts.mono};
-  font-size: 11px;
-  letter-spacing: 2px;
+  ${typography.caption};
   text-transform: uppercase;
   margin-left: auto;
   color: ${({ $color }) => $color};
 `
 
 export const CardQuestion = styled.p`
-  font-weight: 600;
-  font-size: 15px;
+  ${typography.bodyStrong};
 `
 
 export const CardAnswer = styled.p`
-  font-family: ${fonts.mono};
-  font-size: 13px;
-  color: ${colors.textMuted};
-  background: ${colors.bg3};
-  padding: 12px;
+  ${typography.caption};
+  color: ${colors.inkMuted48};
+  background: ${colors.canvasParchment};
+  padding: ${spacing.sm};
   border-radius: ${radius.sm};
-  border-left: 2px solid ${colors.border};
+  border-left: 2px solid ${colors.hairline};
   line-height: 1.5;
 `
 
 export const CardFeedback = styled.p`
-  font-size: 14px;
-  color: ${colors.textMuted};
+  ${typography.caption};
+  color: ${colors.inkMuted48};
   line-height: 1.5;
   font-style: italic;
 `
 
 export const ResetButton = styled.button`
   align-self: center;
-  background: transparent;
-  border: 1px solid ${colors.border};
-  color: ${colors.textMuted};
-  padding: 12px 32px;
-  font-family: ${fonts.display};
-  font-size: 15px;
-  border-radius: ${radius.sm};
+  background: ${colors.canvas};
+  border: 1px solid ${colors.hairline};
+  color: ${colors.inkMuted48};
+  padding: ${spacing.sm} ${spacing.xl};
+  ${typography.bodyStrong};
+  border-radius: ${radius.pill};
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
 
   &:hover {
-    border-color: ${colors.accent};
-    color: ${colors.accent};
+    border-color: ${colors.primary};
+    background: rgba(0, 102, 204, 0.04);
+    color: ${colors.primary};
   }
 `

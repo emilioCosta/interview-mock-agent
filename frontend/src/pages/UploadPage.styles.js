@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors, fonts, radius } from '../styles/globalStyles'
+import { colors, fonts, radius, spacing, typography } from '../styles/globalStyles'
 
 export const Page = styled.div`
   display: flex;
@@ -7,8 +7,9 @@ export const Page = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 40px 24px;
-  gap: 32px;
+  padding: ${spacing.xl} ${spacing.lg};
+  gap: ${spacing.xxl};
+  background: ${colors.canvas};
 `
 
 export const Header = styled.div`
@@ -16,36 +17,31 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: ${spacing.sm};
 `
 
 export const Badge = styled.span`
-  font-family: ${fonts.mono};
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: ${colors.accent2};
-  border: 1px solid ${colors.accent2};
-  padding: 4px 10px;
+  ${typography.navLink};
+  color: ${colors.primary};
+  border: 1px solid ${colors.primary};
+  padding: ${spacing.xxs} ${spacing.xs};
   text-transform: uppercase;
 `
 
 export const Title = styled.h1`
-  font-size: clamp(48px, 8vw, 96px);
-  font-weight: 800;
-  letter-spacing: -3px;
-  line-height: 1;
+  ${typography.heroDisplay};
+  line-height: 1.07;
 `
 
 export const Subtitle = styled.p`
-  color: ${colors.textMuted};
-  font-size: 15px;
-  font-family: ${fonts.mono};
+  ${typography.caption};
+  color: ${colors.inkMuted48};
 `
 
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: ${spacing.md};
   width: 100%;
   max-width: 700px;
 
@@ -55,64 +51,61 @@ export const Grid = styled.div`
 `
 
 export const DropzoneContainer = styled.div`
-  border: 1px solid ${colors.border};
-  border-radius: ${radius.lg};
-  padding: 40px 24px;
+  border: 1px solid ${colors.hairline};
+  border-radius: ${radius.md};
+  padding: ${spacing.xxl} ${spacing.lg};
   cursor: pointer;
   min-height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  background: ${colors.bg2};
+  gap: ${spacing.sm};
+  background: ${colors.canvasParchment};
   transition: border-color 0.2s, background 0.2s;
 
   &:hover {
-    border-color: ${colors.accent};
-    background: ${colors.bg3};
+    border-color: ${colors.primary};
+    background: ${colors.surfacePearl};
   }
 
   ${({ $dragOver }) =>
     $dragOver &&
     `
-    border-color: ${colors.accent};
-    background: ${colors.bg3};
-    box-shadow: 0 0 20px rgba(232, 255, 71, 0.08);
+    border-color: ${colors.primary};
+    background: ${colors.surfacePearl};
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   `}
 
   ${({ $filled }) =>
     $filled &&
     `
-    border-color: ${colors.success};
-    background: rgba(46, 213, 115, 0.04);
+    border-color: ${colors.primary};
+    background: rgba(0, 102, 204, 0.04);
   `}
 `
 
 export const DropzoneLabel = styled.div`
-  font-family: ${fonts.mono};
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: ${colors.textMuted};
+  ${typography.navLink};
+  color: ${colors.inkMuted48};
   text-transform: uppercase;
 `
 
 export const DropzoneIcon = styled.span`
   font-size: 28px;
-  color: ${({ $filled }) => ($filled ? colors.success : 'inherit')};
+  color: ${({ $filled }) => ($filled ? colors.primary : 'inherit')};
 `
 
 export const DropzoneFile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: ${spacing.xs};
 `
 
 export const DropzoneFileName = styled.span`
-  font-family: ${fonts.mono};
-  font-size: 13px;
-  color: ${colors.text};
+  ${typography.caption};
+  color: ${colors.body};
   word-break: break-all;
   text-align: center;
 `
@@ -121,9 +114,9 @@ export const DropzonePrompt = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  color: ${colors.textDim};
-  font-size: 14px;
+  gap: ${spacing.xs};
+  color: ${colors.inkMuted48};
+  ${typography.caption};
 `
 
 export const HiddenInput = styled.input`
@@ -131,37 +124,32 @@ export const HiddenInput = styled.input`
 `
 
 export const StartButton = styled.button`
-  background: ${colors.accent};
-  color: #000;
+  background: ${colors.primary};
+  color: ${colors.onPrimary};
   border: none;
-  padding: 16px 48px;
-  font-family: ${fonts.display};
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  border-radius: ${radius.sm};
+  padding: ${spacing.md} ${spacing.xl};
+  ${typography.bodyStrong};
+  border-radius: ${radius.pill};
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.1s;
+  transition: background 0.2s, transform 0.1s;
 
   &:hover:not(:disabled) {
-    opacity: 0.9;
+    background: ${colors.primaryFocus};
     transform: translateY(-1px);
   }
 
   &:disabled {
-    opacity: 0.3;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 `
 
 export const ErrorMessage = styled.p`
-  color: ${colors.danger};
-  font-family: ${fonts.mono};
-  font-size: 13px;
+  color: ${colors.primary};
+  ${typography.caption};
 `
 
 export const Hint = styled.p`
-  font-family: ${fonts.mono};
-  font-size: 12px;
-  color: ${colors.textDim};
+  ${typography.caption};
+  color: ${colors.inkMuted48};
 `

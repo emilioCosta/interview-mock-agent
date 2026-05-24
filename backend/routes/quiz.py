@@ -1,4 +1,3 @@
-from agents import result
 from fastapi import APIRouter, HTTPException
 from models import AnswerSubmit, EvaluationResult
 from services import session_store, ai_service
@@ -30,8 +29,7 @@ async def submit_answer(payload: AnswerSubmit):
         doc1_text=session["doc1_text"],
         doc2_text=session["doc2_text"],
         questions=session["questions"],
-        answers=session["answers"],
-        total_answered=total_answered,
+        answers=session["answers"]
     )
     session["grades"].append(result["grade"])
     session["trust_scores"].append(result["trust"])
