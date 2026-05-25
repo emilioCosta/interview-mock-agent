@@ -10,8 +10,7 @@ export default function UploadPage({ onStart, loading, error }) {
   return (
     <S.Page>
       <S.Header>
-        <S.Badge>LangChain</S.Badge>
-        <S.Title>DocuQuiz</S.Title>
+        <S.Title>Mock Interview</S.Title>
         <S.Subtitle>Upload two documents. Face the examiner.</S.Subtitle>
       </S.Header>
 

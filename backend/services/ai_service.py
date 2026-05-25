@@ -1,21 +1,26 @@
 import os
 import json
+import re
+import logging
 from typing import Any, Dict
+from difflib import SequenceMatcher
 
 from dotenv import load_dotenv
 from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.tools import tool
 
 from constants import prompts, limits
 
 load_dotenv()
+logger = logging.getLogger(__name__)
 
 llm = ChatAnthropic(
     model=limits.MODEL,
     api_key=os.environ.get("ANTHROPIC_API_KEY"),
-    max_tokens=800,
+    max_tokens=2000,  # Increased for tool use
 )
 
 question_prompt = ChatPromptTemplate.from_messages([
@@ -53,7 +58,5 @@ def evaluate_answer(
         "doc1": doc1_text,
         "doc2": doc2_text,
         "history": history,
-        "min_q": limits.MIN_QUESTIONS,
-        "max_q": limits.MAX_QUESTIONS,
     })
     return result

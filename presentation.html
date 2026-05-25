@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuQuiz - AI-Powered Document Examination Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066cc;
+            --primary-focus: #0071e3;
+            --ink: #1d1d1f;
+            --body: #1d1d1f;
+            --body-muted: #cccccc;
+            --ink-muted-48: #7a7a7a;
+            --canvas: #ffffff;
+            --canvas-parchment: #f5f5f7;
+            --surface-pearl: #fafafc;
+            --hairline: #e0e0e0;
+            --divider-soft: #f0f0f0;
+        }
+
+        body {
+            font-family: 'SF Pro Text', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--canvas) 0%, var(--canvas-parchment) 100%);
+            color: var(--body);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--canvas);
+            border-bottom: 1px solid var(--hairline);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        nav-links a {
+            color: var(--ink-muted-48);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 600;
+            letter-spacing: -0.28px;
+            line-height: 1.07;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--ink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: var(--ink-muted-48);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 102, 204, 0.1);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Section */
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        section h2 {
+            font-size: 40px;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        /* Goals Grid */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .goal-card {
+            background: var(--canvas);
+            border: 1px solid var(--hairline);
+            border-radius: 11px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .goal-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .goal-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .goal-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .goal-card p {
+            font-size: 14px;
+            color: var(--ink-muted-48);
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: var(--canvas-parchment);
+        }
+
+        .workflow-container {
+            display: grid;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .workflow-step {
+            background: var(--canvas);
+            border: 1px solid var(--hairline);
+            border-radius: 11px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .step-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: var(--ink-muted-48);
+        }
+
+        .step-content ul {
+            margin-top: 12px;
+            margin-left: 20px;
+            font-size: 14px;
+            color: var(--ink-muted-48);
+        }
+
+        .step-content li {
+            margin-bottom: 6px;
+        }
+
+        /* Technical Architecture */
+        .technical {
+            background: var(--surface-pearl);
+        }
+
+        .architecture {
+            background: var(--canvas);
+            border: 1px solid var(--hairline);
+            border-radius: 11px;
+            padding: 48px;
+            font-family: 'SF Pro Text', monospace;
+            overflow-x: auto;
+        }
+
+        .arch-diagram {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .arch-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--primary);
+        }
+
+        .arch-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .arch-layer {
+            background: var(--canvas-parchment);
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 13px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .arch-layer.ai {
+            border-left-color: #FF6B6B;
+        }
+
+        .arch-layer.api {
+            border-left-color: #4ECDC4;
+        }
+
+        .arch-layer.frontend {
+            border-left-color: #FFE66D;
+        }
+
+        .arch-layer strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--body);
+        }
+
+        .arch-layer span {
+            color: var(--ink-muted-48);
+            font-size: 12px;
+        }
+
+        /* Data Flow */
+        .dataflow {
+            background: var(--canvas);
+            border: 1px solid var(--hairline);
+            border-radius: 11px;
+            padding: 40px 32px;
+            margin-top: 32px;
+        }
+
+        .dataflow h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--primary);
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: var(--canvas-parchment);
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            padding: 12px 16px;
+            min-width: 120px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .flow-arrow {
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
+        .feature {
+            background: var(--canvas);
+            border: 1px solid var(--hairline);
+            border-radius: 11px;
+            padding: 24px;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            font-size: 13px;
+            color: var(--ink-muted-48);
+            line-height: 1.5;
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.05), rgba(0, 102, 204, 0.02));
+            border-radius: 18px;
+        }
+
+        .cta h2 {
+            margin-bottom: 24px;
+        }
+
+        .button {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background: var(--primary-focus);
+        }
+
+        .button-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            margin-left: 12px;
+        }
+
+        .button-secondary:hover {
+            background: rgba(0, 102, 204, 0.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--canvas);
+            border-top: 1px solid var(--hairline);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--ink-muted-48);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            nav-links {
+                display: none;
+            }
+
+            .arch-diagram {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .workflow-step {
+                grid-template-columns: 1fr;
+            }
+
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            section h2 {
+                font-size: 28px;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .goal-card {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .goal-card:nth-child(1) { animation-delay: 0s; }
+        .goal-card:nth-child(2) { animation-delay: 0.1s; }
+        .goal-card:nth-child(3) { animation-delay: 0.2s; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--canvas);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d2d2d7;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0a0a5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <nav-content>
+                <div class="logo">
+                    🎓 DocuQuiz
+                </div>
+                <nav-links>
+                    <a href="#goals">Goals</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#architecture">Architecture</a>
+                    <a href="#features">Features</a>
+                </nav-links>
+            </nav-content>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <span class="badge">AI-POWERED EXAMINATION PLATFORM</span>
+            <h1>DocuQuiz</h1>
+            <p>Transform documents into intelligent examinations. Upload two documents and let AI-powered questioning uncover deep understanding, detect plagiarism, and provide comprehensive evaluation.</p>
+        </div>
+    </section>
+
+    <!-- Goals Section -->
+    <section id="goals">
+        <div class="container">
+            <h2>Product Goals</h2>
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <div class="goal-icon">🎯</div>
+                    <h3>Intelligent Assessment</h3>
+                    <p>Create adaptive examinations that challenge candidates at appropriate difficulty levels based on document complexity and answer quality.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">🔍</div>
+                    <h3>Detect Plagiarism</h3>
+                    <p>Identify copy-pasted responses, AI-generated answers, and surface-level understanding through advanced analysis of answer patterns.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">📊</div>
+                    <h3>Comprehensive Feedback</h3>
+                    <p>Provide detailed, constructive feedback on each answer with grades, verdicts, and actionable insights for improvement.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">⚡</div>
+                    <h3>Real-Time Evaluation</h3>
+                    <p>Instant grading and feedback on each submitted answer with immediate next question generation for seamless flow.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">📈</div>
+                    <h3>Adaptive Questioning</h3>
+                    <p>Dynamically generate 10-20 questions that evolve based on candidate performance, stopping when sufficient understanding is demonstrated.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">🛡️</div>
+                    <h3>Integrity Assurance</h3>
+                    <p>Ensure exam integrity through multiple verification layers: plagiarism detection, AI content identification, and off-topic filtering.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="workflow-container">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Upload Documents</h3>
+                        <p>Start by uploading two reference documents (position description and job role description) in TXT or MD format.</p>
+                        <ul>
+                            <li>Drag and drop or click to upload</li>
+                            <li>Both files required to proceed</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Answer Questions</h3>
+                        <p>AI examiner generates insightful questions testing deep understanding of document concepts and technical seniority.</p>
+                        <ul>
+                            <li>10-20 adaptive questions</li>
+                            <li>Real-time feedback on each answer</li>
+                            <li>Difficulty adjusts based on performance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Real-Time Evaluation</h3>
+                        <p>Each answer is evaluated instantly using LangChain AI chains that analyze multiple dimensions.</p>
+                        <ul>
+                            <li>Grade: 0-10 based on understanding and relevance</li>
+                            <li>Trust Score: Originality of the answer (0-10)</li>
+                            <li>Plagiarism Detection: ORIGINAL, COPY, or AI generated</li>
+                            <li>Off-topic Detection: Relevance to examination theme</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Summary & Analysis</h3>
+                        <p>Upon completion, receive comprehensive results showing all questions, answers, grades, verdicts, and actionable feedback.</p>
+                        <ul>
+                            <li>Average grade and scores</li>
+                            <li>Detailed breakdown of each answer</li>
+                            <li>Plagiarism and AI detection results</li>
+                            <li>Constructive feedback per question</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section id="architecture" class="technical">
+        <div class="container">
+            <h2>Technical Architecture</h2>
+            
+            <div class="architecture">
+                <div class="arch-diagram">
+                    <!-- Frontend Stack -->
+                    <div>
+                        <h3>🎨 Frontend</h3>
+                        <div class="arch-stack">
+                            <div class="arch-layer frontend">
+                                <strong>React + Vite</strong>
+                                <span>Component-based UI with fast HMR</span>
+                            </div>
+                            <div class="arch-layer frontend">
+                                <strong>Styled Components</strong>
+                                <span>CSS-in-JS for encapsulated styling</span>
+                            </div>
+                            <div class="arch-layer frontend">
+                                <strong>React Hooks</strong>
+                                <span>useQuiz for state management</span>
+                            </div>
+                            <div class="arch-layer frontend">
+                                <strong>Axios</strong>
+                                <span>HTTP client for API communication</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Backend Stack -->
+                    <div>
+                        <h3>⚙️ Backend</h3>
+                        <div class="arch-stack">
+                            <div class="arch-layer api">
+                                <strong>FastAPI</strong>
+                                <span>Modern async API framework</span>
+                            </div>
+                            <div class="arch-layer api">
+                                <strong>Pydantic</strong>
+                                <span>Data validation and serialization</span>
+                            </div>
+                            <div class="arch-layer ai">
+                                <strong>LangChain</strong>
+                                <span>AI chain orchestration framework</span>
+                            </div>
+                            <div class="arch-layer ai">
+                                <strong>Anthropic Claude</strong>
+                                <span>LLM for question generation & evaluation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Flow -->
+            <div class="dataflow">
+                <h3>Data Flow & Processing Pipeline</h3>
+                <div class="flow-diagram">
+                    <div class="flow-box">📄 Documents</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">📝 Session Store</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">🤖 AI Chains</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">📊 Results</div>
+                </div>
+                <div style="margin-top: 24px; font-size: 13px; color: var(--ink-muted-48); line-height: 1.8;">
+                    <strong style="color: var(--body);">Process Flow:</strong><br>
+                    1. User uploads documents → Created in-memory session<br>
+                    2. First question generated via LangChain Question Chain<br>
+                    3. User submits answer → Sent to Evaluation Chain<br>
+                    4. Chain analyzes: originality, plagiarism, grade, off-topic score<br>
+                    5. Decision: Continue with new question OR stop examination<br>
+                    6. Final summary aggregates all results and generates comprehensive report
+                </div>
+            </div>
+
+            <!-- Request/Response -->
+            <div class="dataflow" style="margin-top: 32px;">
+                <h3>Core API Endpoints</h3>
+                <div style="font-family: monospace; font-size: 12px; color: var(--body); background: var(--canvas-parchment); padding: 20px; border-radius: 8px; overflow-x: auto;">
+                    <div style="margin-bottom: 16px;">
+                        <strong style="color: var(--primary);">POST /session</strong><br>
+                        <span style="color: var(--ink-muted-48);">Create new session with uploaded documents</span>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <strong style="color: var(--primary);">POST /answer</strong><br>
+                        <span style="color: var(--ink-muted-48);">Submit answer, receive evaluation & next question</span>
+                    </div>
+                    <div>
+                        <strong style="color: var(--primary);">GET /session/{id}/summary</strong><br>
+                        <span style="color: var(--ink-muted-48);">Retrieve final examination summary and results</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Adaptive Intelligence</h3>
+                    <p>Questions dynamically adjust difficulty based on answer quality and candidate performance patterns.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Plagiarism Detection</h3>
+                    <p>Multi-layer detection identifies verbatim copying, paraphrasing, and AI-generated responses.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-Time Feedback</h3>
+                    <p>Instant grading with constructive feedback on each answer for immediate learning.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📋</div>
+                    <h3>Comprehensive Reports</h3>
+                    <p>Detailed examination summary with grades, verdicts, and actionable insights for improvement.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Session Management</h3>
+                    <p>Track multiple quiz sessions with persistent storage and easy retrieval of past results.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Deep Understanding</h3>
+                    <p>Evaluates genuine comprehension beyond surface-level recall and memorization.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Transform Your Assessment?</h2>
+            <p style="color: var(--ink-muted-48); margin-bottom: 24px; font-size: 17px;">DocuQuiz brings intelligent, automated examination to your document-based evaluation workflows.</p>
+            <button class="button">Get Started</button>
+            <button class="button button-secondary">View Documentation</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 DocuQuiz. An AI-powered examination platform built with LangChain, FastAPI, and React.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add scroll animation for elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.goal-card, .feature, .workflow-step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

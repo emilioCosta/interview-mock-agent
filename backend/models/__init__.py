@@ -19,6 +19,7 @@ class EvaluationResult(BaseModel):
     next_question: Optional[str] = None
     question_number: int
     total_questions: int
+    plagiarism: str
 
 
 class QuizSummary(BaseModel):

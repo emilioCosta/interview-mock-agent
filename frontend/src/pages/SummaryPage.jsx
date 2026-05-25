@@ -34,14 +34,14 @@ export default function SummaryPage({ summary, onReset }) {
 
       <S.Stats>
         <StatCard value={counts.original}     label="Original"      color="var(--success)" />
-        <StatCard value={counts.copy_pasted}  label="Copy-Pasted"   color="var(--danger)"  />
-        <StatCard value={counts.ai_generated} label="AI-Generated"  color="var(--warn)"    />
+        <StatCard value={counts.copy_pasted}  label="Copy Pasted"   color="var(--danger)"  />
+        <StatCard value={counts.ai_generated} label="AI Generated"  color="var(--warn)"    />
       </S.Stats>
 
       <S.Breakdown>
         <S.SectionTitle>Full Breakdown</S.SectionTitle>
         {questions.map((q, i) => {
-          const v = VERDICT_META[verdicts[i]] || VERDICT_META.original
+          const v = VERDICT_META[trust_scores[i]] || VERDICT_META.original
           return (
             <S.Card key={i}>
               <S.CardHeader>
