@@ -4,7 +4,7 @@ from routes import session
 from routes.v1 import quiz as quiz_v1
 from routes.v2 import quiz as quiz_v2
 
-app = FastAPI(title="DocuQuiz API", version="2.0.0")
+app = FastAPI(title="InterviewMockAgent API", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,

@@ -1,4 +1,4 @@
-# DocuQuiz — AI-Powered Document Examination Platform
+# InterviewMockAgent — AI-Powered Document Examination Platform
 
 An intelligent examination platform built with **LangChain + FastAPI + React**.
 
@@ -21,7 +21,7 @@ Upload two documents as context, and an LLM-powered examiner will:
 ## Project Structure
 
 ```
-docuquiz/
+InterviewMockAgent/
 ├── backend/
 │   ├── main.py                   # FastAPI entry point
 │   ├── requirements.txt          # Dependencies
