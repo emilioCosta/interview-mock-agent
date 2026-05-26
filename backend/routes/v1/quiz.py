@@ -1,7 +1,6 @@
 import logging
 
 from constants import limits
-from routes import session
 from fastapi import APIRouter, HTTPException
 from models import AnswerSubmit, EvaluationResult
 from services import session_store
@@ -23,7 +22,6 @@ async def submit_answer(payload: AnswerSubmit):
     if not session["questions"]:
         raise HTTPException(status_code=400, detail="No question has been generated yet")
 
-    # Append answer so eval_chain sees the full pair
     session["answers"].append(payload.answer)
     total_answered = len(session["answers"])
 
@@ -34,7 +32,7 @@ async def submit_answer(payload: AnswerSubmit):
         answers=session["answers"]
     )
 
-    if answerResult["off_topic"] > 0.7:  # Adjust threshold as needed
+    if answerResult["off_topic"] > 0.7:
         logger.warning(f"Answer flagged as off-topic (score: {answerResult['off_topic']}). Rejecting answer.")
         raise HTTPException(status_code=403, detail="The answer is off-topic and must not be evaluated.")
 
