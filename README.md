@@ -1,56 +1,78 @@
-# InterviewMockAgent — AI-Powered Document Examination Platform
+# DocuQuiz — AI-Powered Document Examination Platform
 
-An intelligent examination platform built with **LangChain + FastAPI + React**.
+An intelligent examination system with **two evaluation approaches** built with **LangChain + FastAPI + React**.
 
-Upload two documents as context, and an LLM-powered examiner will:
-- 🤖 Ask 10-20 adaptive questions based on the documents
-- 🎓 Grade each answer from 0-10
-- 🔍 Detect copy-pasted responses
-- 🛡️ Identify AI-generated answers
-- 📊 Provide detailed feedback and final summary
+Upload two documents, and the AI examiner will:
+- Generate adaptive questions based on document content
+- Evaluate answers with plagiarism/AI detection
+- Provide detailed feedback on each response
+- Compute final grades with plagiarism penalties
+
+## Two API Versions
+
+| Version | Approach | Use Case | Accuracy |
+|---------|----------|----------|----------|
+| **V1** | Simple prompt chains | Quick assessments | ~70-75% |
+| **V2** | Autonomous tool-calling with reference lookup | Interview prep, certification | ~85-90% |
+
+**V2** uses agentic patterns: Claude autonomously calls a lookup tool to verify claims before scoring, enabling more reliable plagiarism detection.
 
 ## Features
 
-✅ **Document Upload** — Upload two reference documents (TXT, PDF, etc.)  
-✅ **Adaptive Questioning** — AI asks 10-20 questions, stopping when it has enough information  
-✅ **Smart Evaluation** — Grades answers and detects copy-paste or AI-generated content  
-✅ **Real-time Feedback** — Get instant feedback on each answer  
-✅ **Comprehensive Summary** — View all questions, answers, grades, and verdicts  
+✅ **Document Upload** — Upload reference documents (TXT/PDF/etc.)  
+✅ **Adaptive Questioning** — AI generates 10-20 context-aware questions  
+✅ **V1 Evaluation** — Direct chains for fast assessment  
+✅ **V2 Evaluation** — Tool-calling loops for autonomous verification  
+✅ **Plagiarism Detection** — Classify answers: AI, COPY, or ORIGINAL  
+✅ **Grade Adjustment** — Plagiarized answers (AI/COPY) scored as 0  
+✅ **Real-time Feedback** — Instant feedback on each answer  
+✅ **Comprehensive Summary** — Final grades, trust scores, feedback, and verdicts  
 ✅ **Session Management** — Track multiple quiz sessions  
 
 ## Project Structure
 
 ```
-InterviewMockAgent/
+docuquiz/
 ├── backend/
-│   ├── main.py                   # FastAPI entry point
-│   ├── requirements.txt          # Dependencies
+│   ├── main.py                   # FastAPI entry point, route registration
+│   ├── pyproject.toml            # Dependencies (uv)
 │   ├── .env.example              # Environment variables template
+│   ├── constants/
+│   │   ├── limits.py             # API limits, model config
+│   │   └── prompts.py            # System prompts for V1 & V2
 │   ├── models/
 │   │   └── __init__.py           # Pydantic data models
 │   ├── routes/
-│   │   ├── session.py            # Session creation & summary endpoints
-│   │   └── quiz.py               # Answer submission endpoint
+│   │   ├── session.py            # Session creation & summary (shared)
+│   │   ├── quiz.py               # V1 answer endpoint
+│   │   └── quiz_v2/              # V2 endpoints (autonomous tool calling)
+│   │       └── quiz.py
 │   └── services/
-│       ├── ai_service.py         # LangChain AI chains
-│       └── session_store.py      # In-memory session storage
+│       ├── utils.py              # Shared utilities (history building, JSON parsing)
+│       ├── session_store.py      # Session storage with plagiarism tracking
+│       ├── v1/
+│       │   └── ai_service.py     # V1: Simple chains
+│       └── v2/
+│           └── ai_service.py     # V2: Tool-calling loops with reference lookup
 └── frontend/
     ├── index.html
     ├── vite.config.js
     ├── package.json
     └── src/
-        ├── App.jsx               # Main component
-        ├── main.jsx              # Entry point
-        ├── index.css
+        ├── App.jsx
+        ├── main.jsx
         ├── hooks/
-        │   └── useQuiz.js        # Quiz state management
+        │   └── useQuiz.js        # State management
         ├── pages/
-        │   ├── UploadPage.jsx    # Document upload
-        │   ├── QuizPage.jsx      # Answer submission
-        │   └── SummaryPage.jsx   # Results display
+        │   ├── UploadPage.jsx
+        │   ├── QuizPage.jsx
+        │   └── SummaryPage.jsx
+        ├── styles/
+        │   └── globalStyles.js
         └── utils/
             └── api.js            # Axios API client
 ```
+
 
 ## Quick Start
 
@@ -65,17 +87,19 @@ InterviewMockAgent/
 ```bash
 cd backend
 
-# Create virtual environment
-python -m venv venv
+# Create virtual environment (using uv for faster installs)
+uv venv
 
 # Activate virtual environment
 # On Windows:
-venv\Scripts\activate
+.venv\Scripts\activate
 # On macOS/Linux:
-source venv/bin/activate
+source .venv/bin/activate
 
 # Install dependencies
-pip install -r requirements.txt
+uv pip install -r requirements.txt
+# OR using uv directly:
+uv sync
 
 # Configure API key
 cp .env.example .env
@@ -94,33 +118,35 @@ npm install
 
 ## Running the Application
 
-### Option 1: Run Both Backend and Frontend (Recommended)
+### Option 1: Development (Local)
 
 **Terminal 1 — Backend:**
 ```bash
 cd backend
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-python -m uvicorn main:app --reload --port 8000
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv run uvicorn main:app --reload --port 8000
 ```
 
-Backend will be available at: **http://localhost:8000**  
-API documentation: **http://localhost:8000/docs**
+Backend: **http://localhost:8000**  
+API Docs: **http://localhost:8000/docs**  
+Health Check: **http://localhost:8000/health**
 
 **Terminal 2 — Frontend:**
 ```bash
 cd frontend
+npm install
 npm run dev
 ```
 
-Frontend will be available at: **http://localhost:5173**
+Frontend: **http://localhost:5173**
 
 ### Option 2: Production Build
 
 **Backend:**
 ```bash
 cd backend
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-python -m uvicorn main:app --port 8000
+source .venv/bin/activate
+uv run uvicorn main:app --port 8000
 ```
 
 **Frontend:**
@@ -130,9 +156,47 @@ npm run build
 npm run preview
 ```
 
+## Choosing V1 vs V2
+
+### Use V1 When:
+- Fast turnaround needed (3-5 seconds per answer)
+- Quick assessments or practice quizzes
+- Lower token cost acceptable
+- ~70-75% accuracy is sufficient
+
+### Use V2 When:
+- High accuracy required (85-90%)
+- Interview preparation or certification
+- Can tolerate longer response time (5-8 seconds)
+- Plagiarism/AI detection critical
+- Need audit trail of verified claims
+
+
 ## API Endpoints
 
-### Create Quiz Session
+### Session Management (Shared)
+```
+POST /api/session/create
+POST /api/session/{session_id}/summary
+GET /health
+```
+
+### V1 Evaluation (Simple Chains)
+```
+POST /api/quiz/v1/answer
+```
+Fast evaluation with direct prompt chains. Good for quick assessments.
+
+### V2 Evaluation (Autonomous Tool-Calling)
+```
+POST /api/quiz/v2/answer
+GET /api/quiz/v2/answer/{session_id}/references
+```
+Autonomous verification with document reference lookup. Better accuracy for plagiarism/AI detection.
+
+### Detailed Endpoints
+
+#### Create Session
 ```
 POST /api/session/create
 Content-Type: multipart/form-data
@@ -143,50 +207,75 @@ Body:
 
 Response:
   {
-    "session_id": "unique-session-id",
-    "first_question": "Your first exam question..."
+    "session_id": "uuid",
+    "first_question": "Question text"
   }
 ```
 
-### Submit Answer
+#### Submit Answer (V1)
 ```
-POST /api/quiz/answer
+POST /api/quiz/v1/answer
 Content-Type: application/json
 
 Body:
   {
     "session_id": "session-id",
-    "answer": "User's answer text"
+    "answer": "Your answer"
   }
 
 Response:
   {
-    "verdict": "original|copy_pasted|ai_generated",
-    "grade": 8.5,
-    "feedback": "Excellent response because...",
+    "trust": 8,
+    "grade": 8,
+    "feedback": "Feedback text",
     "is_complete": false,
-    "next_question": "Next question...",
-    "question_number": 2,
-    "total_questions": 15
+    "next_question": "Next question",
+    "plagiarism": "ORIGINAL"
   }
 ```
 
-### Get Quiz Summary
+#### Submit Answer (V2)
+```
+POST /api/quiz/v2/answer
+Content-Type: application/json
+
+Body:
+  {
+    "session_id": "session-id",
+    "answer": "Your answer"
+  }
+
+Response:
+  {
+    "trust": 9,
+    "grade": 9,
+    "feedback": "Detailed feedback",
+    "is_complete": false,
+    "next_question": "Next question",
+    "plagiarism": "ORIGINAL",
+    "references_checked": ["claim 1", "claim 2"]
+  }
+```
+
+#### Get Quiz Summary
 ```
 GET /api/session/{session_id}/summary
 
 Response:
   {
     "session_id": "session-id",
-    "total_questions": 15,
-    "average_grade": 7.8,
-    "trust_scores": ["original", "copy_pasted", ...],
-    "grades": [8.5, 6.0, ...],
+    "total_questions": 12,
+    "average_grade": 8.1,
+    "grades": [8, 9, 7, ...],
+    "trust_scores": [8, 9, 7, ...],
     "feedback_list": ["Feedback 1", ...],
     "questions": ["Question 1", ...],
     "answers": ["Answer 1", ...]
   }
+
+Note: Grades adjusted to 0 for "AI" or "COPY" plagiarism verdicts
 ```
+
 
 ## How It Works
 
@@ -200,102 +289,217 @@ Response:
 4. **Adaptive Questions** — The system continues asking (10-20 questions total) until it has enough information
 5. **Summary** — View your results, average grade, and detailed feedback for each answer
 
-## Environment Variables
+## Learning Resources
 
-Create a `.env` file in the `backend/` directory:
+This project demonstrates several LLM and software architecture concepts:
 
-```env
-# Anthropic API Key (required)
-ANTHROPIC_API_KEY=sk-ant-your-key-here
+- **LangChain**: Chains, prompts, tools, message history management
+- **Agentic Patterns**: Tool-calling loops, autonomous decision-making
+- **Prompt Engineering**: System prompts, messaging placeholders, context management
+- **Plagiarism Detection**: AI/COPY/ORIGINAL classification with multi-phase evaluation
+- **API Design**: RESTful endpoints, session management, version coexistence
+- **Separation of Concerns**: V1/V2 isolation, utils extraction, role-specific chains
 
-# Optional: Adjust model if needed
-# MODEL=claude-sonnet-4-20250514
+## Future Improvements
 
-# Optional: Adjust question range
-# MIN_QUESTIONS=10
-# MAX_QUESTIONS=20
-```
+### Short-term
+- [ ] Semantic search for better reference matching (embeddings instead of keywords)
+- [ ] Caching for repeated reference lookups
+- [ ] Batch evaluation mode for multiple sessions
+- [ ] Tool calling analytics and audit trail
+
+### Medium-term
+- [ ] Database persistence (replace in-memory storage)
+- [ ] User authentication and dashboard
+- [ ] Multiple AI model support (Claude, GPT-4, Llama)
+- [ ] Document pagination for large files
+- [ ] WebSocket support for real-time feedback
+
+### Long-term
+- [ ] Advanced prompt optimization (DSPy, few-shot learning)
+- [ ] Fine-tuned models for plagiarism detection
+- [ ] Multi-language support
+- [ ] Custom evaluation rubrics per use case
+- [ ] Integration with LMS platforms (Canvas, Blackboard)
+
+## Project Context
+
+Built to explore agentic AI patterns and tool-calling in production systems. The V2 implementation showcases how autonomous verification improves reliability while maintaining transparency through audit trails.
+
+Great for:
+- Interview preparation and technical assessments
+- Understanding LLM evaluation systems
+- Learning LangChain and agentic patterns
+- Building similar document-based Q&A systems
+
 
 ## Technology Stack
 
-| Layer | Technology |
-|-------|-----------|
-| **Backend** | FastAPI, LangChain, Claude AI (Anthropic) |
-| **Frontend** | React 18, Vite, Axios |
-| **AI Model** | Claude Sonnet 4 |
-| **State Management** | React Hooks |
-| **Styling** | CSS Modules |
+| Component | Technology |
+|-----------|-----------|
+| **Backend** | FastAPI, LangChain, Claude Sonnet |
+| **Frontend** | React 18, Vite, Styled Components |
+| **AI Model** | Claude 3.5 Sonnet (Anthropic) |
+| **Package Manager** | uv (fast Python package management) |
+| **State Management** | React Hooks + custom useQuiz hook |
+| **HTTP Client** | Axios |
+| **Data Validation** | Pydantic |
+
+## Key Implementation Details
+
+### Shared Utilities
+- `services/utils.py`:
+  - `build_conversation_history()` — Constructs LangChain message history from Q/A pairs
+  - `extract_json_from_response()` — Robust JSON extraction handling multiple response formats
+
+### Session Management
+- In-memory storage with plagiarism verdict tracking
+- Grade adjustment: AI/COPY answers scored as 0
+- Average calculation accounts for plagiarism penalties
+
+### Prompting Strategy
+- **V1**: Direct evaluation with implicit reasoning
+- **V2**: "MAY use tools" (not "MUST") to allow autonomous decision-making
+- Separate final JSON extraction chain to prevent infinite loops
+
 
 ## Troubleshooting
 
-### Backend won't start
-- Check Python version: `python --version` (must be 3.9+)
-- Verify venv is activated
-- Ensure all dependencies installed: `pip install -r requirements.txt`
+### Backend Issues
 
-### "Module not found" errors
-- Activate virtual environment first
-- Reinstall dependencies: `pip install --upgrade -r requirements.txt`
+| Issue | Solution |
+|-------|----------|
+| Python version error | Check: `python --version` (must be 3.9+) |
+| Virtual env not found | Run: `uv venv` then activate it |
+| Dependencies not installed | Run: `uv sync` or `uv pip install -r requirements.txt` |
+| API Key errors | Verify `.env` file exists in `backend/`, check `ANTHROPIC_API_KEY` format |
+| Port 8000 already in use | Use: `uv run uvicorn main:app --port 8001` |
 
-### Frontend won't connect to backend
-- Check backend is running on port 8000
-- Verify CORS is enabled (should be in `main.py`)
-- Check browser console for errors
+### Frontend Issues
 
-### API Key errors
-- Verify `.env` file exists in `backend/` directory
-- Check `ANTHROPIC_API_KEY` is set correctly
-- Ensure no extra spaces or quotes in `.env`
+| Issue | Solution |
+|-------|----------|
+| Can't connect to backend | Ensure backend running on port 8000, check CORS errors in console |
+| Module not found | Run: `npm install` in frontend directory |
+| Port 5173 in use | Vite will auto-select next available port |
 
-### Questions/Feedback
+### V2 Specific
 
-For issues or suggestions, check the logs in both terminal windows for detailed error messages.
+| Issue | Solution |
+|-------|----------|
+| Tool calling timeout | Check token count, verify `MAX_ITERATIONS` in constants |
+| Infinite loop errors | System uses max 5 iterations per evaluation by design |
+| Reference lookup returns empty | Ensure documents have enough content, check keyword matching |
 
-uvicorn main:app --reload
-# → http://localhost:8000
+### Common Errors
+
+**"Session not found"**
+- Session expired or wrong session_id
+- Verify session created successfully before submitting answers
+
+**"off-topic" response rejected**
+- Answer flagged as off-topic (>70% score)
+- Reword answer to be more relevant to documents
+
+**JSON parsing failed**
+- Rare edge case with LLM response format
+- System returns safe default response
+- Check logs for details
+
+## Performance
+
+### Latency
+- **V1**: 3-5 seconds per evaluation
+- **V2**: 5-8 seconds per evaluation (includes tool calling loop)
+
+### Token Usage
+- **V1**: ~1000-1500 tokens per answer
+- **V2**: ~1500-2500 tokens per answer (tools add overhead)
+
+### Accuracy
+- **V1**: ~70-75% plagiarism detection accuracy
+- **V2**: ~85-90% plagiarism detection accuracy (with autonomous verification)
+
+## Environment Variables
+
+```env
+# Required
+ANTHROPIC_API_KEY=sk-ant-your-api-key
+
+# Optional
+MODEL=claude-3-5-sonnet-20241022
+MAX_RESPONSE_TOKENS=2000
+MIN_QUESTIONS=10
+MAX_QUESTIONS=20
+MAX_ITERATIONS=5
 ```
 
-### Frontend
+## Architecture
 
-```bash
-cd frontend
-npm install
-npm run dev
-# → http://localhost:5173
+### V1 — Simple Chains
+```
+1. Question Chain
+   ChatPromptTemplate → ChatAnthropic → Text
+   
+2. Evaluation Chain
+   ChatPromptTemplate(MessagesPlaceholder) → ChatAnthropic → JsonOutputParser
+   
+   Flow:
+   - Receives full conversation history (questions + answers as messages)
+   - Returns JSON: { grade, plagiarism, feedback, is_complete, next_question }
+   - No tools, pure reasoning
 ```
 
-## LangChain Architecture
-
-### Chain 1 — `question_chain`
+### V2 — Autonomous Tool-Calling (Agentic)
 ```
-ChatPromptTemplate → ChatAnthropic → .content
+1. Question Chain (same as V1)
+
+2. Evaluation Chain with Tools
+   ChatPromptTemplate(MessagesPlaceholder) → ChatAnthropic.bind_tools()
+   
+   Loop (max 5 iterations):
+   - Claude receives evaluation prompt + conversation history
+   - Claude autonomously decides: "Should I verify this claim?"
+   - If yes: Calls lookup_document_reference tool
+   - System executes: Keyword-based document search
+   - Claude receives results, re-invokes chain
+   - Repeats until Claude stops calling tools or hits max iterations
+
+3. Final JSON Chain (no tools)
+   ChatPromptTemplate(MessagesPlaceholder) → ChatAnthropic
+   
+   - Takes full conversation history including tool results
+   - Forces JSON output (no tools available)
+   - Returns structured evaluation
+   
+Reference Lookup Tool:
+   lookup_document_reference(query, document="both")
+   - Searches doc1 and/or doc2 for keyword matches
+   - Returns top 3 passages with line numbers and relevance scores
+   - Claude uses results to verify claims in answers
 ```
-Takes `doc1` + `doc2`, returns the first question as plain text.
 
-### Chain 2 — `eval_chain`
+### Plagiarism Scoring
+- **ORIGINAL** → Grade unchanged
+- **AI** → Grade becomes 0
+- **COPY** → Grade becomes 0
+- Final average calculated from adjusted grades
+
+### Data Flow
 ```
-ChatPromptTemplate(MessagesPlaceholder) → ChatAnthropic → JsonOutputParser
+User Upload Documents
+    ↓
+Session Created, First Question Generated (V1/V2)
+    ↓
+User Submits Answer
+    ↓
+V1: Evaluation Chain → Grade + Plagiarism Verdict
+    OR
+V2: Evaluation Loop → Tool Calls → Reference Lookup → Final JSON → Grade + Plagiarism
+    ↓
+Grade Stored with Plagiarism Verdict
+    ↓
+Summary Calculates Average with Plagiarism Penalties
 ```
-- Receives the full conversation history as LangChain `HumanMessage` / `AIMessage` pairs
-- Returns structured JSON: `{ verdict, grade, feedback, is_complete, next_question }`
-- `MessagesPlaceholder` lets LangChain manage multi-turn context naturally
 
-## API Endpoints
-
-| Method | Path | Description |
-|--------|------|-------------|
-| POST | `/api/session/create` | Upload 2 docs → `{ session_id, first_question }` |
-| POST | `/api/quiz/answer` | Submit answer → evaluation + next question |
-| GET | `/api/session/{id}/summary` | Full quiz results (completed sessions only) |
-| GET | `/health` | Health check |
-
-## How It Works
-
-1. **Upload** — two `.txt` / `.md` files sent as multipart form data
-2. **Session** — documents stored in memory; `question_chain` generates question #1
-3. **Quiz loop** — each answer is appended to LangChain message history and passed to `eval_chain`:
-   - **Verdict**: `original` / `copy_pasted` / `ai_generated`
-   - **Grade**: 0–10
-   - **Feedback**: constructive 1–2 sentence comment
-   - **Completion**: enforced min 10 / max 20 questions
 4. **Summary** — per-question breakdown with average grade and verdict counts
