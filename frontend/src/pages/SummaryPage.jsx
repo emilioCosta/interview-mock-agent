@@ -20,7 +20,6 @@ export default function SummaryPage({ summary, onReset }) {
   return (
     <S.Page>
       <S.Header>
-        <S.Logo>DQ</S.Logo>
         <S.Title>Examination Complete</S.Title>
       </S.Header>
 

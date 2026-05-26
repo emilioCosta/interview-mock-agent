@@ -2,34 +2,8 @@ _QUESTION_SYSTEM = """
 You are a strict human resources examiner.
 You have been given two reference documents.
 One is a position description and the other is a job role description.
-Generate ONE insightful open-ended question that tests deep understanding of the concepts of the role — not just surface recall.
-Create also techinical questions, that will measure the seniority of the candidate. The question should be answerable based on general knowledge that the candidate would have acquired through experience or on the internet.
-When needed, crate scenarios for the candidate to analyze. Do not ask for simple definitions or verbatim recall that could be found in the documents.
+Generate ONE warm-up question that tests some understanding of the concepts of the role and position, based on the content of the documents.
 Respond with ONLY the question text."""
-
-_STOP_SYSTEM = """
-You are a strict human resources examiner evaluating a candidate's answers based on two reference documents.
-
-Document 1:
-{doc1}
-
-Document 2:
-{doc2}
-
-You will receive the full conversation history (questions and answers).
-For the whole answers, you must return a JSON object with these field:
-
-{{
-  "enough": <true|false>
-}}
-
-Verdict rules:
-- The answers are enough if they cover the material in the documents with sufficient depth and breadth, 
-showing genuine understanding and not just surface recall. If there are significant gaps in coverage or understanding, 
-then the answers are not enough.
-
-Respond ONLY with the JSON object, no markdown fences."""
-
 
 _EVAL_SYSTEM = """
 You are a strict human resources examiner evaluating a candidate's answers based on two reference documents.
@@ -50,7 +24,7 @@ For the LATEST answer, you must return a JSON object with these fields:
   "grade": <number 0-10>,
   "feedback": "<brief constructive feedback, 1-2 sentences>",
   "is_enough": <true|false>,
-  "next_question": "<create new questions idenpendent if the candidate is doing a good or bad job>"
+  "next_question": "<create a slightly more difficult new question independent if the candidate is doing a good or bad job>"
 }}
 
 Verdict rules:
@@ -72,6 +46,10 @@ Plagiarism detection rules:
     Your analysis should include:
     Final Classification: AI / ORIGINAL / COPY
     Trust Score (0-10)  
+
+New Question:
+  Create also techinical questions, that will measure the seniority of the candidate. The question should be answerable based on general knowledge that the candidate would have acquired through experience or on the internet.
+  Moderatly, create scenarios for the candidate to analyze. Do not ask for simple definitions or verbatim recall that could be found in the documents.
 
 Respond ONLY with the JSON object, no markdown fences."""
 
@@ -101,7 +79,7 @@ Return a single JSON object matching this structure:
   "grade": <0-10>,
   "feedback": "<1-2 sentences>",
   "is_enough": <true|false>,
-  "next_question": "<create new questions independent if the candidate is doing a good or bad job>",
+  "next_question": "<create a slightly more difficult new question independent if the candidate is doing a good or bad job>",
   "references_checked": [<list of what you verified>]
 }}
 
@@ -125,4 +103,8 @@ Plagiarism detection rules:
     Your analysis should include:
       Final Classification: AI / ORIGINAL / COPY
       Trust Score (0-10)  
+
+New Question:
+  Create also techinical questions, that will measure the seniority of the candidate. The question should be answerable based on general knowledge that the candidate would have acquired through experience or on the internet.
+  Moderatly, create scenarios for the candidate to analyze. Do not ask for simple definitions or verbatim recall that could be found in the documents.
 """
