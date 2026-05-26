@@ -1,26 +1,20 @@
 import os
-import json
-import re
-import logging
 from typing import Any, Dict
-from difflib import SequenceMatcher
 
 from dotenv import load_dotenv
 from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.tools import tool
 
 from constants import prompts, limits
+from services.utils import build_conversation_history
 
 load_dotenv()
-logger = logging.getLogger(__name__)
 
 llm = ChatAnthropic(
     model=limits.MODEL,
     api_key=os.environ.get("ANTHROPIC_API_KEY"),
-    max_tokens=2000,  # Increased for tool use
+    max_tokens=limits.MAX_RESPONSE_TOKENS,
 )
 
 question_prompt = ChatPromptTemplate.from_messages([
@@ -42,17 +36,13 @@ def generate_first_question(doc1_text: str, doc2_text: str) -> str:
     result = question_chain.invoke({"doc1": doc1_text, "doc2": doc2_text})
     return result.content.strip()
 
-
 def evaluate_answer(
     doc1_text: str,
     doc2_text: str,
     questions: list,
     answers: list
 ) -> Dict[str, Any]:
-    history = []
-    for q, a in zip(questions, answers):
-        history.append(AIMessage(content=q))
-        history.append(HumanMessage(content=a))
+    history = build_conversation_history(questions, answers)
 
     result = eval_chain.invoke({
         "doc1": doc1_text,

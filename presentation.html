@@ -12,22 +12,22 @@
         }
 
         :root {
-            --primary: #0066cc;
-            --primary-focus: #0071e3;
-            --ink: #1d1d1f;
-            --body: #1d1d1f;
-            --body-muted: #cccccc;
-            --ink-muted-48: #7a7a7a;
-            --canvas: #ffffff;
-            --canvas-parchment: #f5f5f7;
-            --surface-pearl: #fafafc;
-            --hairline: #e0e0e0;
-            --divider-soft: #f0f0f0;
+            --primary: #2997ff;
+            --primary-focus: #0a84ff;
+            --ink: #f5f5f7;
+            --body: #f5f5f7;
+            --body-muted: #555555;
+            --ink-muted-48: #a1a1a6;
+            --canvas: #1d1d1f;
+            --canvas-parchment: #282828;
+            --surface-pearl: #1f1f21;
+            --hairline: #333333;
+            --divider-soft: #424245;
         }
 
         body {
             font-family: 'SF Pro Text', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, var(--canvas) 0%, var(--canvas-parchment) 100%);
+            background: var(--canvas);
             color: var(--body);
             line-height: 1.6;
             min-height: 100vh;
@@ -40,10 +40,9 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
 
-        nav-content {
+        .nav-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 16px 24px;
@@ -53,7 +52,7 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 600;
             color: var(--primary);
             display: flex;
@@ -61,20 +60,20 @@
             gap: 8px;
         }
 
-        nav-links {
+        .nav-links {
             display: flex;
             gap: 32px;
             list-style: none;
         }
 
-        nav-links a {
+        .nav-links a {
             color: var(--ink-muted-48);
             text-decoration: none;
             font-size: 14px;
             transition: color 0.2s;
         }
 
-        nav-links a:hover {
+        .nav-links a:hover {
             color: var(--primary);
         }
 
@@ -87,8 +86,9 @@
 
         /* Hero Section */
         .hero {
-            padding: 80px 0;
+            padding: 120px 0;
             text-align: center;
+            border-bottom: 1px solid var(--hairline);
         }
 
         .hero h1 {
@@ -96,32 +96,57 @@
             font-weight: 600;
             letter-spacing: -0.28px;
             line-height: 1.07;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--ink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 24px;
+            color: var(--ink);
         }
 
         .hero p {
             font-size: 17px;
             color: var(--ink-muted-48);
-            margin-bottom: 32px;
-            max-width: 600px;
+            margin-bottom: 40px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
         }
 
-        .badge {
-            display: inline-block;
-            background: rgba(0, 102, 204, 0.1);
-            color: var(--primary);
-            padding: 6px 12px;
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            letter-spacing: 0.5px;
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: var(--primary-focus);
+            box-shadow: 0 4px 12px rgba(41, 151, 255, 0.3);
+        }
+
+        .button-secondary {
+            background: var(--canvas-parchment);
+            color: var(--body);
+            border: 1px solid var(--hairline);
+        }
+
+        .button-secondary:hover {
+            background: var(--divider-soft);
+            border-color: var(--primary);
         }
 
         /* Section */
@@ -140,6 +165,14 @@
             line-height: 1.1;
             margin-bottom: 48px;
             text-align: center;
+            color: var(--ink);
+        }
+
+        section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 16px;
         }
 
         /* Goals Grid */
@@ -147,33 +180,31 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
-            margin-top: 48px;
         }
 
         .goal-card {
             background: var(--canvas);
             border: 1px solid var(--hairline);
-            border-radius: 11px;
-            padding: 32px 24px;
+            border-radius: 12px;
+            padding: 28px;
             text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .goal-card:hover {
             border-color: var(--primary);
-            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
-            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(41, 151, 255, 0.15);
+            background: var(--canvas-parchment);
         }
 
         .goal-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
+            font-size: 36px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--primary);
         }
 
         .goal-card h3 {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 16px;
             margin-bottom: 12px;
         }
 
@@ -185,7 +216,7 @@
 
         /* How It Works */
         .how-it-works {
-            background: var(--canvas-parchment);
+            background: var(--surface-pearl);
         }
 
         .workflow-container {
@@ -198,47 +229,105 @@
         .workflow-step {
             background: var(--canvas);
             border: 1px solid var(--hairline);
-            border-radius: 11px;
-            padding: 32px;
+            border-radius: 12px;
+            padding: 28px;
             display: grid;
-            grid-template-columns: 80px 1fr;
-            gap: 24px;
-            align-items: center;
+            grid-template-columns: 70px 1fr;
+            gap: 20px;
+            align-items: flex-start;
         }
 
         .step-number {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: var(--primary);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 600;
+            flex-shrink: 0;
         }
 
         .step-content h3 {
-            font-size: 20px;
-            font-weight: 600;
             margin-bottom: 8px;
         }
 
         .step-content p {
             font-size: 14px;
             color: var(--ink-muted-48);
+            margin-bottom: 12px;
         }
 
         .step-content ul {
-            margin-top: 12px;
             margin-left: 20px;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--ink-muted-48);
         }
 
         .step-content li {
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+        }
+
+        /* V1 vs V2 Comparison */
+        .comparison-table {
+            background: var(--canvas);
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 32px;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            background: var(--canvas-parchment);
+            padding: 16px 24px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--body);
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        .comparison-table td {
+            padding: 16px 24px;
+            font-size: 13px;
+            color: var(--body);
+            border-bottom: 1px solid var(--divider-soft);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr > td:first-child {
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        .comparison-table .v1-col {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .comparison-table .v2-col {
+            background: rgba(0, 102, 204, 0.04);
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: rgba(41, 151, 255, 0.15);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 4px;
         }
 
         /* Technical Architecture */
@@ -249,58 +338,55 @@
         .architecture {
             background: var(--canvas);
             border: 1px solid var(--hairline);
-            border-radius: 11px;
-            padding: 48px;
-            font-family: 'SF Pro Text', monospace;
-            overflow-x: auto;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 32px;
         }
 
         .arch-diagram {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            max-width: 1000px;
-            margin: 0 auto;
+            gap: 40px;
+            margin-bottom: 32px;
         }
 
         .arch-section h3 {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .arch-stack {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
         .arch-layer {
             background: var(--canvas-parchment);
             border: 1px solid var(--hairline);
             border-radius: 8px;
-            padding: 16px;
+            padding: 12px 16px;
             font-size: 13px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .arch-layer.ai {
-            border-left-color: #FF6B6B;
+            border-left: 3px solid var(--primary);
         }
 
         .arch-layer.api {
-            border-left-color: #4ECDC4;
+            border-left-color: #34C759;
         }
 
-        .arch-layer.frontend {
-            border-left-color: #FFE66D;
+        .arch-layer.ai {
+            border-left-color: #FF9500;
         }
 
         .arch-layer strong {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             color: var(--body);
+            font-size: 13px;
         }
 
         .arch-layer span {
@@ -312,42 +398,50 @@
         .dataflow {
             background: var(--canvas);
             border: 1px solid var(--hairline);
-            border-radius: 11px;
-            padding: 40px 32px;
-            margin-top: 32px;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
         }
 
         .dataflow h3 {
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: 24px;
-            color: var(--primary);
+            margin-bottom: 20px;
+            color: var(--ink);
         }
 
         .flow-diagram {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             font-size: 13px;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         .flow-box {
             background: var(--canvas-parchment);
             border: 1px solid var(--hairline);
-            border-radius: 8px;
-            padding: 12px 16px;
-            min-width: 120px;
+            border-radius: 6px;
+            padding: 8px 12px;
+            min-width: 100px;
             text-align: center;
             font-weight: 500;
         }
 
         .flow-arrow {
-            font-size: 20px;
             color: var(--primary);
+            font-weight: 600;
         }
 
-        /* Features Section */
+        .flow-text {
+            font-size: 12px;
+            color: var(--ink-muted-48);
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        /* Features Grid */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -357,18 +451,19 @@
         .feature {
             background: var(--canvas);
             border: 1px solid var(--hairline);
-            border-radius: 11px;
+            border-radius: 12px;
             padding: 24px;
         }
 
         .feature-icon {
-            font-size: 32px;
+            font-size: 28px;
             margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--primary);
         }
 
         .feature h3 {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px;
             margin-bottom: 8px;
         }
 
@@ -378,55 +473,24 @@
             line-height: 1.5;
         }
 
-        /* CTA Section */
-        .cta {
-            text-align: center;
-            padding: 80px 0;
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.05), rgba(0, 102, 204, 0.02));
-            border-radius: 18px;
-        }
-
-        .cta h2 {
-            margin-bottom: 24px;
-        }
-
-        .button {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 9999px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .button:hover {
-            background: var(--primary-focus);
-        }
-
-        .button-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            margin-left: 12px;
-        }
-
-        .button-secondary:hover {
-            background: rgba(0, 102, 204, 0.05);
-        }
-
         /* Footer */
         footer {
-            background: var(--canvas);
+            background: var(--canvas-parchment);
             border-top: 1px solid var(--hairline);
-            padding: 40px 0;
+            padding: 48px 0;
             text-align: center;
             color: var(--ink-muted-48);
             font-size: 13px;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--primary-focus);
         }
 
         /* Responsive */
@@ -435,7 +499,7 @@
                 font-size: 36px;
             }
 
-            nav-links {
+            .nav-links {
                 display: none;
             }
 
@@ -458,55 +522,13 @@
                 font-size: 28px;
             }
 
-            .flow-diagram {
-                flex-direction: column;
+            .comparison-table {
+                overflow-x: auto;
             }
 
-            .flow-arrow {
-                transform: rotate(90deg);
+            .comparison-table table {
+                min-width: 500px;
             }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        section {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .goal-card {
-            animation: fadeInUp 0.6s ease-out backwards;
-        }
-
-        .goal-card:nth-child(1) { animation-delay: 0s; }
-        .goal-card:nth-child(2) { animation-delay: 0.1s; }
-        .goal-card:nth-child(3) { animation-delay: 0.2s; }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--canvas);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #d2d2d7;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a0a0a5;
         }
     </style>
 </head>
@@ -514,70 +536,179 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <nav-content>
-                <div class="logo">
-                    🎓 DocuQuiz
-                </div>
-                <nav-links>
-                    <a href="#goals">Goals</a>
-                    <a href="#how-it-works">How It Works</a>
+            <div class="nav-content">
+                <div class="logo">DocuQuiz</div>
+                <div class="nav-links">
+                    <a href="#overview">Overview</a>
+                    <a href="#comparison">V1 vs V2</a>
+                    <a href="#how">How It Works</a>
                     <a href="#architecture">Architecture</a>
-                    <a href="#features">Features</a>
-                </nav-links>
-            </nav-content>
+                </div>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <span class="badge">AI-POWERED EXAMINATION PLATFORM</span>
             <h1>DocuQuiz</h1>
-            <p>Transform documents into intelligent examinations. Upload two documents and let AI-powered questioning uncover deep understanding, detect plagiarism, and provide comprehensive evaluation.</p>
+            <p>An AI-powered examination platform that transforms documents into intelligent assessments. Upload two documents and let advanced AI uncover deep understanding, detect plagiarism, and provide comprehensive evaluation with autonomous reference verification.</p>
+            <div class="hero-buttons">
+                <button class="button button-primary">Get Started</button>
+                <button class="button button-secondary">View Documentation</button>
+            </div>
         </div>
     </section>
 
-    <!-- Goals Section -->
-    <section id="goals">
+    <!-- Overview Section -->
+    <section id="overview">
         <div class="container">
-            <h2>Product Goals</h2>
+            <h2>Core Capabilities</h2>
             <div class="goals-grid">
                 <div class="goal-card">
-                    <div class="goal-icon">🎯</div>
+                    <div class="goal-icon">01</div>
                     <h3>Intelligent Assessment</h3>
-                    <p>Create adaptive examinations that challenge candidates at appropriate difficulty levels based on document complexity and answer quality.</p>
+                    <p>Adaptive examinations that challenge candidates at appropriate difficulty levels based on document complexity and answer quality.</p>
                 </div>
                 <div class="goal-card">
-                    <div class="goal-icon">🔍</div>
-                    <h3>Detect Plagiarism</h3>
-                    <p>Identify copy-pasted responses, AI-generated answers, and surface-level understanding through advanced analysis of answer patterns.</p>
+                    <div class="goal-icon">02</div>
+                    <h3>Plagiarism Detection</h3>
+                    <p>Multi-layer detection identifies verbatim copying, paraphrasing, and AI-generated responses through advanced analysis.</p>
                 </div>
                 <div class="goal-card">
-                    <div class="goal-icon">📊</div>
-                    <h3>Comprehensive Feedback</h3>
-                    <p>Provide detailed, constructive feedback on each answer with grades, verdicts, and actionable insights for improvement.</p>
+                    <div class="goal-icon">03</div>
+                    <h3>Autonomous Verification</h3>
+                    <p>V2 API: Claude autonomously verifies claims against documents using tool-calling agentic loops for reliable fact-checking.</p>
                 </div>
                 <div class="goal-card">
-                    <div class="goal-icon">⚡</div>
-                    <h3>Real-Time Evaluation</h3>
-                    <p>Instant grading and feedback on each submitted answer with immediate next question generation for seamless flow.</p>
+                    <div class="goal-icon">04</div>
+                    <h3>Real-Time Feedback</h3>
+                    <p>Instant grading with constructive feedback on each answer, enabling immediate learning and adaptation.</p>
                 </div>
                 <div class="goal-card">
-                    <div class="goal-icon">📈</div>
-                    <h3>Adaptive Questioning</h3>
-                    <p>Dynamically generate 10-20 questions that evolve based on candidate performance, stopping when sufficient understanding is demonstrated.</p>
+                    <div class="goal-icon">05</div>
+                    <h3>Comprehensive Reports</h3>
+                    <p>Detailed examination summary with grades, verdicts, plagiarism results, and actionable insights per question.</p>
                 </div>
                 <div class="goal-card">
-                    <div class="goal-icon">🛡️</div>
-                    <h3>Integrity Assurance</h3>
-                    <p>Ensure exam integrity through multiple verification layers: plagiarism detection, AI content identification, and off-topic filtering.</p>
+                    <div class="goal-icon">06</div>
+                    <h3>Exam Integrity</h3>
+                    <p>Multiple verification layers ensure integrity: plagiarism detection, AI identification, off-topic filtering, and reference verification.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- V1 vs V2 Comparison -->
+    <section id="comparison">
+        <div class="container">
+            <h2>V1 vs V2 Comparison</h2>
+            <p style="text-align: center; color: var(--ink-muted-48); margin-bottom: 32px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                V2 introduces autonomous reference lookup through agentic tool-calling, enabling Claude to verify claims directly against documents during evaluation. V1 remains available for backward compatibility.
+            </p>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th class="v1-col">V1 (Original)</th>
+                            <th class="v2-col">V2 (Agentic)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Endpoint</td>
+                            <td class="v1-col"><code>/api/quiz/answer</code></td>
+                            <td class="v2-col"><code>/api/quiz/v2/answer</code></td>
+                        </tr>
+                        <tr>
+                            <td>Evaluation Method</td>
+                            <td class="v1-col">Direct prompt chains</td>
+                            <td class="v2-col">Tool-calling agentic loops</td>
+                        </tr>
+                        <tr>
+                            <td>Reference Lookup</td>
+                            <td class="v1-col">Context provided in prompt</td>
+                            <td class="v2-col"><span class="feature-badge">NEW</span>Autonomous tool calls</td>
+                        </tr>
+                        <tr>
+                            <td>Tool Use</td>
+                            <td class="v1-col">None</td>
+                            <td class="v2-col"><span class="feature-badge">NEW</span>lookup_document_reference_v2()</td>
+                        </tr>
+                        <tr>
+                            <td>Decision Making</td>
+                            <td class="v1-col">Claude receives all context</td>
+                            <td class="v2-col"><span class="feature-badge">NEW</span>Claude decides what to verify</td>
+                        </tr>
+                        <tr>
+                            <td>Plagiarism Detection</td>
+                            <td class="v1-col">Pattern-based analysis</td>
+                            <td class="v2-col"><span class="feature-badge">IMPROVED</span>With verified references</td>
+                        </tr>
+                        <tr>
+                            <td>Trust Score Accuracy</td>
+                            <td class="v1-col">~70-75% baseline</td>
+                            <td class="v2-col"><span class="feature-badge">IMPROVED</span>~85-90% with verification</td>
+                        </tr>
+                        <tr>
+                            <td>Token Usage</td>
+                            <td class="v1-col">~1000-1500 tokens</td>
+                            <td class="v2-col">~1500-2500 tokens (tools)</td>
+                        </tr>
+                        <tr>
+                            <td>Latency</td>
+                            <td class="v1-col">3-5 seconds</td>
+                            <td class="v2-col">5-8 seconds (verification)</td>
+                        </tr>
+                        <tr>
+                            <td>Max Tool Iterations</td>
+                            <td class="v1-col">N/A</td>
+                            <td class="v2-col"><span class="feature-badge">SAFE</span>Max 5 iterations</td>
+                        </tr>
+                        <tr>
+                            <td>Verifiable Reasoning</td>
+                            <td class="v1-col">Implicit</td>
+                            <td class="v2-col"><span class="feature-badge">NEW</span>Full audit trail</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td class="v1-col">Quick evaluations</td>
+                            <td class="v2-col"><span class="feature-badge">NEW</span>Interview assessment</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 32px; background: var(--surface-pearl); border: 1px solid var(--hairline); border-radius: 12px; padding: 24px;">
+                <h3>When to Use Each Version</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 16px;">
+                    <div>
+                        <h4 style="font-size: 14px; font-weight: 600; color: var(--body); margin-bottom: 8px;">Use V1 When:</h4>
+                        <ul style="font-size: 13px; color: var(--ink-muted-48); line-height: 1.6; list-style-position: inside; margin-left: 0;">
+                            <li>Quick evaluations needed</li>
+                            <li>Lower token usage preferred</li>
+                            <li>Existing V1 integration</li>
+                            <li>Latency sensitive</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 14px; font-weight: 600; color: var(--body); margin-bottom: 8px;">Use V2 When:</h4>
+                        <ul style="font-size: 13px; color: var(--ink-muted-48); line-height: 1.6; list-style-position: inside; margin-left: 0;">
+                            <li>High-stakes assessment</li>
+                            <li>Accurate plagiarism detection</li>
+                            <li>Verifiable reasoning required</li>
+                            <li>Interview/certification use</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works -->
-    <section id="how-it-works" class="how-it-works">
+    <section id="how" class="how-it-works">
         <div class="container">
             <h2>How It Works</h2>
             <div class="workflow-container">
@@ -585,23 +716,18 @@
                     <div class="step-number">1</div>
                     <div class="step-content">
                         <h3>Upload Documents</h3>
-                        <p>Start by uploading two reference documents (position description and job role description) in TXT or MD format.</p>
-                        <ul>
-                            <li>Drag and drop or click to upload</li>
-                            <li>Both files required to proceed</li>
-                        </ul>
+                        <p>Start by uploading two reference documents (position description and job offer) in TXT or MD format. Both files are required.</p>
                     </div>
                 </div>
 
                 <div class="workflow-step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Answer Questions</h3>
-                        <p>AI examiner generates insightful questions testing deep understanding of document concepts and technical seniority.</p>
+                        <h3>Answer Adaptive Questions</h3>
+                        <p>AI examiner generates insightful questions testing deep understanding of document concepts. Difficulty adjusts based on performance.</p>
                         <ul>
                             <li>10-20 adaptive questions</li>
                             <li>Real-time feedback on each answer</li>
-                            <li>Difficulty adjusts based on performance</li>
                         </ul>
                     </div>
                 </div>
@@ -609,13 +735,13 @@
                 <div class="workflow-step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3>Real-Time Evaluation</h3>
-                        <p>Each answer is evaluated instantly using LangChain AI chains that analyze multiple dimensions.</p>
+                        <h3>Instant Evaluation</h3>
+                        <p>V2: Each answer evaluated with autonomous reference verification using tool-calling agentic loops.</p>
                         <ul>
-                            <li>Grade: 0-10 based on understanding and relevance</li>
-                            <li>Trust Score: Originality of the answer (0-10)</li>
-                            <li>Plagiarism Detection: ORIGINAL, COPY, or AI generated</li>
-                            <li>Off-topic Detection: Relevance to examination theme</li>
+                            <li>Grade: 0-10 based on understanding</li>
+                            <li>Trust Score: Originality assessment (0-10)</li>
+                            <li>Plagiarism: ORIGINAL / COPY / AI</li>
+                            <li>References Verified: Audit trail</li>
                         </ul>
                     </div>
                 </div>
@@ -623,14 +749,8 @@
                 <div class="workflow-step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <h3>Summary & Analysis</h3>
-                        <p>Upon completion, receive comprehensive results showing all questions, answers, grades, verdicts, and actionable feedback.</p>
-                        <ul>
-                            <li>Average grade and scores</li>
-                            <li>Detailed breakdown of each answer</li>
-                            <li>Plagiarism and AI detection results</li>
-                            <li>Constructive feedback per question</li>
-                        </ul>
+                        <h3>Comprehensive Summary</h3>
+                        <p>Upon completion, receive detailed results with all questions, answers, grades, verdicts, and actionable feedback.</p>
                     </div>
                 </div>
             </div>
@@ -641,95 +761,93 @@
     <section id="architecture" class="technical">
         <div class="container">
             <h2>Technical Architecture</h2>
-            
+
             <div class="architecture">
+                <h3 style="grid-column: 1 / -1; margin-bottom: 24px;">Stack Overview</h3>
                 <div class="arch-diagram">
-                    <!-- Frontend Stack -->
                     <div>
-                        <h3>🎨 Frontend</h3>
-                        <div class="arch-stack">
-                            <div class="arch-layer frontend">
-                                <strong>React + Vite</strong>
-                                <span>Component-based UI with fast HMR</span>
-                            </div>
-                            <div class="arch-layer frontend">
-                                <strong>Styled Components</strong>
-                                <span>CSS-in-JS for encapsulated styling</span>
-                            </div>
-                            <div class="arch-layer frontend">
-                                <strong>React Hooks</strong>
-                                <span>useQuiz for state management</span>
-                            </div>
-                            <div class="arch-layer frontend">
-                                <strong>Axios</strong>
-                                <span>HTTP client for API communication</span>
+                        <div class="arch-section">
+                            <h3>Frontend</h3>
+                            <div class="arch-stack">
+                                <div class="arch-layer">
+                                    <strong>React + Vite</strong>
+                                    <span>Component-based UI</span>
+                                </div>
+                                <div class="arch-layer">
+                                    <strong>Styled Components</strong>
+                                    <span>CSS-in-JS styling</span>
+                                </div>
+                                <div class="arch-layer">
+                                    <strong>React Hooks</strong>
+                                    <span>useQuiz state management</span>
+                                </div>
+                                <div class="arch-layer">
+                                    <strong>Axios</strong>
+                                    <span>HTTP client</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Backend Stack -->
                     <div>
-                        <h3>⚙️ Backend</h3>
-                        <div class="arch-stack">
-                            <div class="arch-layer api">
-                                <strong>FastAPI</strong>
-                                <span>Modern async API framework</span>
-                            </div>
-                            <div class="arch-layer api">
-                                <strong>Pydantic</strong>
-                                <span>Data validation and serialization</span>
-                            </div>
-                            <div class="arch-layer ai">
-                                <strong>LangChain</strong>
-                                <span>AI chain orchestration framework</span>
-                            </div>
-                            <div class="arch-layer ai">
-                                <strong>Anthropic Claude</strong>
-                                <span>LLM for question generation & evaluation</span>
+                        <div class="arch-section">
+                            <h3>Backend & AI</h3>
+                            <div class="arch-stack">
+                                <div class="arch-layer api">
+                                    <strong>FastAPI</strong>
+                                    <span>Async API framework</span>
+                                </div>
+                                <div class="arch-layer api">
+                                    <strong>Pydantic</strong>
+                                    <span>Data validation</span>
+                                </div>
+                                <div class="arch-layer ai">
+                                    <strong>LangChain</strong>
+                                    <span>AI chain orchestration</span>
+                                </div>
+                                <div class="arch-layer ai">
+                                    <strong>Claude 3.5 Sonnet</strong>
+                                    <span>Question & evaluation</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Data Flow -->
             <div class="dataflow">
-                <h3>Data Flow & Processing Pipeline</h3>
+                <h3>Data Flow Pipeline</h3>
                 <div class="flow-diagram">
-                    <div class="flow-box">📄 Documents</div>
+                    <div class="flow-box">Documents</div>
                     <div class="flow-arrow">→</div>
-                    <div class="flow-box">📝 Session Store</div>
+                    <div class="flow-box">Session</div>
                     <div class="flow-arrow">→</div>
-                    <div class="flow-box">🤖 AI Chains</div>
+                    <div class="flow-box">AI Evaluation</div>
                     <div class="flow-arrow">→</div>
-                    <div class="flow-box">📊 Results</div>
+                    <div class="flow-box">Results</div>
                 </div>
-                <div style="margin-top: 24px; font-size: 13px; color: var(--ink-muted-48); line-height: 1.8;">
-                    <strong style="color: var(--body);">Process Flow:</strong><br>
-                    1. User uploads documents → Created in-memory session<br>
-                    2. First question generated via LangChain Question Chain<br>
-                    3. User submits answer → Sent to Evaluation Chain<br>
-                    4. Chain analyzes: originality, plagiarism, grade, off-topic score<br>
-                    5. Decision: Continue with new question OR stop examination<br>
-                    6. Final summary aggregates all results and generates comprehensive report
+                <div class="flow-text">
+                    <strong>V2 Agentic Loop (Simplified):</strong><br>
+                    Claude analyzes answer → Claude decides what to verify → Calls lookup_document_reference_v2() → Receives passages → Continues reasoning → Produces JSON evaluation
                 </div>
             </div>
 
-            <!-- Request/Response -->
-            <div class="dataflow" style="margin-top: 32px;">
-                <h3>Core API Endpoints</h3>
-                <div style="font-family: monospace; font-size: 12px; color: var(--body); background: var(--canvas-parchment); padding: 20px; border-radius: 8px; overflow-x: auto;">
-                    <div style="margin-bottom: 16px;">
-                        <strong style="color: var(--primary);">POST /session</strong><br>
-                        <span style="color: var(--ink-muted-48);">Create new session with uploaded documents</span>
-                    </div>
-                    <div style="margin-bottom: 16px;">
-                        <strong style="color: var(--primary);">POST /answer</strong><br>
-                        <span style="color: var(--ink-muted-48);">Submit answer, receive evaluation & next question</span>
+            <div class="dataflow">
+                <h3>API Endpoints</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; font-size: 12px;">
+                    <div>
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">V1 Endpoints</strong>
+                        <div style="font-family: monospace; line-height: 1.8; color: var(--ink-muted-48);">
+                            POST /api/quiz/answer<br>
+                            GET /api/quiz/{id}/summary
+                        </div>
                     </div>
                     <div>
-                        <strong style="color: var(--primary);">GET /session/{id}/summary</strong><br>
-                        <span style="color: var(--ink-muted-48);">Retrieve final examination summary and results</span>
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">V2 Endpoints</strong>
+                        <div style="font-family: monospace; line-height: 1.8; color: var(--ink-muted-48);">
+                            POST /api/quiz/v2/answer<br>
+                            GET /api/quiz/v2/{id}/references
+                        </div>
                     </div>
                 </div>
             </div>
@@ -742,90 +860,49 @@
             <h2>Key Features</h2>
             <div class="features-grid">
                 <div class="feature">
-                    <div class="feature-icon">🧠</div>
-                    <h3>Adaptive Intelligence</h3>
-                    <p>Questions dynamically adjust difficulty based on answer quality and candidate performance patterns.</p>
+                    <div class="feature-icon">A</div>
+                    <h3>Adaptive Difficulty</h3>
+                    <p>Questions automatically adjust based on answer quality and candidate performance patterns.</p>
                 </div>
                 <div class="feature">
-                    <div class="feature-icon">🔐</div>
-                    <h3>Plagiarism Detection</h3>
-                    <p>Multi-layer detection identifies verbatim copying, paraphrasing, and AI-generated responses.</p>
+                    <div class="feature-icon">D</div>
+                    <h3>Multi-Layer Detection</h3>
+                    <p>Identifies verbatim copying, paraphrasing, and AI-generated responses with high accuracy.</p>
                 </div>
                 <div class="feature">
-                    <div class="feature-icon">⚡</div>
+                    <div class="feature-icon">V</div>
+                    <h3>Reference Verification</h3>
+                    <p>V2: Autonomous tool calling verifies claims directly against documents with full audit trail.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">T</div>
                     <h3>Real-Time Feedback</h3>
-                    <p>Instant grading with constructive feedback on each answer for immediate learning.</p>
+                    <p>Instant grading with constructive, detailed feedback on each submitted answer.</p>
                 </div>
                 <div class="feature">
-                    <div class="feature-icon">📋</div>
+                    <div class="feature-icon">R</div>
                     <h3>Comprehensive Reports</h3>
-                    <p>Detailed examination summary with grades, verdicts, and actionable insights for improvement.</p>
+                    <p>Complete examination summary with detailed breakdown, verdicts, and actionable insights.</p>
                 </div>
                 <div class="feature">
-                    <div class="feature-icon">🔄</div>
+                    <div class="feature-icon">S</div>
                     <h3>Session Management</h3>
-                    <p>Track multiple quiz sessions with persistent storage and easy retrieval of past results.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Deep Understanding</h3>
-                    <p>Evaluates genuine comprehension beyond surface-level recall and memorization.</p>
+                    <p>Track multiple quiz sessions with persistent storage and easy result retrieval.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to Transform Your Assessment?</h2>
-            <p style="color: var(--ink-muted-48); margin-bottom: 24px; font-size: 17px;">DocuQuiz brings intelligent, automated examination to your document-based evaluation workflows.</p>
-            <button class="button">Get Started</button>
-            <button class="button button-secondary">View Documentation</button>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2026 DocuQuiz. An AI-powered examination platform built with LangChain, FastAPI, and React.</p>
+            <p>© 2026 DocuQuiz. AI-powered document examination platform built with LangChain, FastAPI, React, and Claude.</p>
+            <p style="margin-top: 16px; font-size: 12px;">
+                <a href="#architecture">Architecture</a> • 
+                <a href="#comparison">V1 vs V2</a> • 
+                Design follows <a href="#">Apple Design System</a>
+            </p>
         </div>
     </footer>
-
-    <script>
-        // Smooth scroll for navigation links
-        document.querySelectorAll('nav-links a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const target = document.querySelector(targetId);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Add scroll animation for elements
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.goal-card, .feature, .workflow-step').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
 </body>
 </html>

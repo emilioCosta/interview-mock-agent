@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from models import SessionResponse, QuizSummary
-from services import session_store, ai_service
+from services import session_store
+from services.v1 import ai_service
 
 router = APIRouter()
 
@@ -37,11 +38,21 @@ async def get_summary(session_id: str):
     except KeyError:
         raise HTTPException(status_code=404, detail="Session not found")
 
-    # if not session["is_complete"]:
-    #     raise HTTPException(status_code=400, detail="Quiz is not yet complete")
+    if not session["is_complete"]:
+        raise HTTPException(status_code=400, detail="Quiz is not yet complete")
 
     grades = session["grades"]
-    avg = sum(grades) / len(grades) if grades else 0
+    plagiarism_verdicts = session.get("plagiarism_verdicts", [])
+    
+    # Adjust grades for plagiarism - score 0 for AI or COPY
+    adjusted_grades = []
+    for i, grade in enumerate(grades):
+        if i < len(plagiarism_verdicts) and plagiarism_verdicts[i] in ["AI", "COPY"]:
+            adjusted_grades.append(0)
+        else:
+            adjusted_grades.append(grade)
+    
+    avg = sum(adjusted_grades) / len(adjusted_grades) if adjusted_grades else 0
 
     return QuizSummary(
         session_id=session_id,

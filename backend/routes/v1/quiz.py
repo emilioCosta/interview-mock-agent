@@ -4,9 +4,10 @@ from constants import limits
 from routes import session
 from fastapi import APIRouter, HTTPException
 from models import AnswerSubmit, EvaluationResult
-from services import session_store, ai_service
+from services import session_store
+from services.v1 import ai_service
 
-router = APIRouter(prefix="/v1", tags=["quiz_v1"])
+router = APIRouter()
 logger = logging.getLogger(__name__)
 
 @router.post("/answer", response_model=EvaluationResult)
@@ -40,7 +41,6 @@ async def submit_answer(payload: AnswerSubmit):
     session["grades"].append(answerResult["grade"])
     session["trust_scores"].append(answerResult["trust"])
     session["feedbacks"].append(answerResult["feedback"])
-    session["plagiarism_verdicts"].append(answerResult["plagiarism"])
 
     logger.warning(f"Total responses answered: {total_answered}.")
     nextQuestion = answerResult.get("next_question")

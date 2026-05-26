@@ -14,6 +14,7 @@ def create_session(doc1_text: str, doc2_text: str) -> str:
         "grades": [],
         "trust_scores": [],
         "feedbacks": [],
+        "plagiarism_verdicts": [],
         "is_complete": False,
         "chat_history": [],
     }

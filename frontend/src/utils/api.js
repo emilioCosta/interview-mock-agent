@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const api = axios.create({ baseURL: '/api' })
+const apiVersion = 'v1'
+const api = axios.create({ baseURL: `/api/${apiVersion}` })
 
 export async function createSession(doc1File, doc2File) {
   const form = new FormData()
@@ -9,7 +10,7 @@ export async function createSession(doc1File, doc2File) {
   const { data } = await api.post('/session/create', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
-  // Returns { session_id, first_question }
+
   return data
 }
 
