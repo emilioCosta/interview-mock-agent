@@ -10,10 +10,10 @@ Upload two documents, and the AI examiner will:
 
 ## Two API Versions
 
-| Version | Approach | Use Case | Accuracy |
-|---------|----------|----------|----------|
-| **V1** | Simple prompt chains | Quick assessments | ~70-75% |
-| **V2** | Autonomous tool-calling with reference lookup | Interview prep, certification | ~85-90% |
+| Version | Approach | Use Case |
+|---------|----------|----------|
+| **V1** | Simple prompt chains | Quick assessments |
+| **V2** | Autonomous tool-calling with reference lookup | Interview prep, certification |
 
 **V2** uses agentic patterns: Claude autonomously calls a lookup tool to verify claims before scoring, enabling more reliable plagiarism detection.
 
@@ -162,10 +162,8 @@ npm run preview
 - Fast turnaround needed (3-5 seconds per answer)
 - Quick assessments or practice quizzes
 - Lower token cost acceptable
-- ~70-75% accuracy is sufficient
 
 ### Use V2 When:
-- High accuracy required (85-90%)
 - Interview preparation or certification
 - Can tolerate longer response time (5-8 seconds)
 - Plagiarism/AI detection critical
@@ -313,14 +311,11 @@ This project demonstrates several LLM and software architecture concepts:
 - [ ] User authentication and dashboard
 - [ ] Multiple AI model support (Claude, GPT-4, Llama)
 - [ ] Document pagination for large files
-- [ ] WebSocket support for real-time feedback
 
 ### Long-term
-- [ ] Advanced prompt optimization (DSPy, few-shot learning)
+- [ ] Advanced prompt optimization (few-shot learning)
 - [ ] Fine-tuned models for plagiarism detection
 - [ ] Multi-language support
-- [ ] Custom evaluation rubrics per use case
-- [ ] Integration with LMS platforms (Canvas, Blackboard)
 
 ## Project Context
 
@@ -405,20 +400,6 @@ Great for:
 - Rare edge case with LLM response format
 - System returns safe default response
 - Check logs for details
-
-## Performance
-
-### Latency
-- **V1**: 3-5 seconds per evaluation
-- **V2**: 5-8 seconds per evaluation (includes tool calling loop)
-
-### Token Usage
-- **V1**: ~1000-1500 tokens per answer
-- **V2**: ~1500-2500 tokens per answer (tools add overhead)
-
-### Accuracy
-- **V1**: ~70-75% plagiarism detection accuracy
-- **V2**: ~85-90% plagiarism detection accuracy (with autonomous verification)
 
 ## Environment Variables
 
