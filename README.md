@@ -2,7 +2,7 @@
 
 An intelligent examination system with **two evaluation approaches** built with **LangChain + FastAPI + React**.
 
-Upload two documents, and the AI examiner will:
+Upload two documents, and the AI examiner will
 - Generate adaptive questions based on document content
 - Evaluate answers with plagiarism/AI detection
 - Provide detailed feedback on each response
